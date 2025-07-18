@@ -1,22 +1,33 @@
 import requests
-from requests.auth import HTTPBasicAuth
+from scraper.config import BASE_URL, HEADERS, AUTH
 
-#url = "https://support.zendesk.com/api/v2/help_center/en-us/articles?sort_by=updated_at&sort_order=asc&start_time=1404345231"
-url = "https://support.zendesk.com/api/v2/help_center/articles/4408883393818"
+def get_all_articles(max_articles):
+    articles = []
+    page = 1
+    per_page = 5
+    # url = f"{BASE_URL}articles"
+    while len(articles) < max_articles:
+        url = f"{BASE_URL}articles.json?page={page}&per_page={per_page}"
+        print(f"Fetching: {url}")
+        response = requests.get(url, headers=HEADERS, auth=AUTH)
+        data = response.json()
+        current_article = data.get("articles", [])
+        if not current_article: 
+            break
+        articles.extend(current_article)
+        print(f"=>Collected: {len(articles)} articles")
+        if data.get("next_page") is None:
+            break 	 # no next page
+        page += 1
+    return articles[:max_articles]  
+def get_article_detail(article_id):
+    url = f"{BASE_URL}articles/{article_id}"
+    response = requests.get(url, headers=HEADERS, auth=AUTH)
+    article = response.json().get("article", {})
+    return article.get("title", "Untitled"), article.get("body", "")
 
-headers = {
-	"Content-Type": "application/json",
-}
-email_address = 'your_email_address'
-api_token = 'your_api_token'
-# Use basic authentication
-auth = HTTPBasicAuth(f'{email_address}/token', api_token)
 
-response = requests.request(
-	"GET",
-	url,
-	auth=auth,
-	headers=headers
-)
 
-print(response.text)
+
+
+          
