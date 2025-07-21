@@ -13,13 +13,17 @@ header_to_split_on = [
 
 all_chunks = []
 
-md_folder = Path("../md_output")
-for md_file in md_folder.glob("*.md"):
-    with open(md_file, "r", encoding="utf-8") as f:
-        markdown_document = f.read()
-        markdown_splitter = MarkdownHeaderTextSplitter(header_to_split_on)
-        md_header_splits = markdown_splitter.split_text(markdown_document)
-        all_chunks.extend(md_header_splits)
+
+def mds_to_chunks(): 
+    # md_folder = Path("md_output")
+    md_folder = Path(__file__).resolve().parent.parent / "md_output"
+    for md_file in md_folder.glob("*.md"):
+        with open(md_file, "r", encoding="utf-8") as f:
+            markdown_document = f.read()
+            markdown_splitter = MarkdownHeaderTextSplitter(header_to_split_on)
+            md_header_splits = markdown_splitter.split_text(markdown_document)
+            all_chunks.extend(md_header_splits)
+    return all_chunks
 
 # print(all_chunks)
 
