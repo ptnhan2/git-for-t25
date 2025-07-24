@@ -7,13 +7,12 @@ from markdowns.html_to_md import clean_and_convert_html
 OUTPUT_DIR = os.path.join("markdowns", "md_output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-def create_markdowns_directory():
+def write_articles_to_markdown(articles):
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
         print(f"Created directory: {OUTPUT_DIR}")
     else: 
         print(f"Directory already exists: {OUTPUT_DIR}")
-    articles = get_all_articles(max_articles=40)
     for i, article in enumerate(articles):
         article_id = article["id"]
         title, html_body = get_article_detail(article_id)
