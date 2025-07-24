@@ -41,7 +41,7 @@ def create_vectorstore_file(client, vector_store_id, file_id):
         "type": "auto",
     }
     )
-    print("CREATE_VECTORSTORE_FILE: ", vector_store_file)
+    # print("CREATE_VECTORSTORE_FILE: ", vector_store_file)
     return vector_store_file
 
 def create_list_of_vectorstore_files(client, vectorstore_id):
@@ -65,7 +65,7 @@ def log_chunks(client, vector_store_id):
     vector_store_files = list_of_vectorstore_files(client, vector_store_id)
     total_files = len(vector_store_files.data)
     total_chunks = 0
-    print("LOGGING CHUNKS: FILE: ", len( vector_store_files.data))
+    print("=> Logging chunks...")
     for file in vector_store_files.data:
         file_content = retrieve_vectorstore_file_content(vector_store_id, file.id)
         file_tokens = encoding.encode(file_content["data"][0]["text"])
@@ -73,7 +73,7 @@ def log_chunks(client, vector_store_id):
         chunk_size_tokens = file.chunking_strategy.static.max_chunk_size_tokens
         chunks = math.ceil(file_size_tokens / chunk_size_tokens)
         total_chunks += chunks
-        print(f"File {file.id} had {file_size_tokens} tokens and was chunked into {chunks} chunks",)
+        print(f"File with id: {file.id} had {file_size_tokens} tokens and was chunked into {chunks} chunks",)
     print(f"Total number of files embedded: ", {total_files})
     print(f"Total number of chunks embedded: {total_chunks}")
 
@@ -97,5 +97,13 @@ def delete_vectorstore_file(client, vector_store_id, file_id):
     vector_store_id=vector_store_id, 
     file_id= file_id,
     )
-    print("DELETE_VECTORSTORE_FILE: ", vector_store_file)
+    # print("DELETE_VECTORSTORE_FILE: ", vector_store_file)
     return vector_store_file
+
+def delete_old_vectorstore_files(slugify, files, newest_articles, client, vector_store_id):
+    if(len(files.data) > 0):
+            for file in files.data:
+                for article in newest_articles: 
+                    if(slugify(article["title"])+".md" == file.filename):
+                        delete_vectorstore_file(client, vector_store_id, file.id)
+                        print("Deleted vectorstore file: ", file.id, " - ", file.filename)
