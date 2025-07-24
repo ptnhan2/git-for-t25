@@ -1,7 +1,6 @@
 import os
 from slugify import slugify
 import shutil 
-from scraper.fetch_articles import get_all_articles, get_article_detail
 from markdowns.html_to_md import clean_and_convert_html
 
 OUTPUT_DIR = os.path.join("markdowns", "md_output")
@@ -15,7 +14,8 @@ def write_articles_to_markdown(articles):
         print(f"Directory already exists: {OUTPUT_DIR}")
     for i, article in enumerate(articles):
         article_id = article["id"]
-        title, html_body = get_article_detail(article_id)
+        title = article["title"] 
+        html_body = article["body"]
 
         markdown = clean_and_convert_html(html_body)
         slug = slugify(title)

@@ -49,13 +49,15 @@ def create_list_of_vectorstore_files(client, vectorstore_id):
         files = list_files()
         for file in files.data:
             create_vectorstore_file(client, vectorstore_id , file.id)
+            
         return "Success"
     except:
         return "Error"
 
 def list_of_vectorstore_files(client, vector_store_id):
     vector_store_files = client.vector_stores.files.list(
-    vector_store_id=vector_store_id
+    vector_store_id=vector_store_id,
+    limit=100
     )
     return vector_store_files
 
@@ -63,6 +65,7 @@ def log_chunks(client, vector_store_id):
     vector_store_files = list_of_vectorstore_files(client, vector_store_id)
     total_files = len(vector_store_files.data)
     total_chunks = 0
+    print("LOGGING CHUNKS: FILE: ", len( vector_store_files.data))
     for file in vector_store_files.data:
         file_content = retrieve_vectorstore_file_content(vector_store_id, file.id)
         file_tokens = encoding.encode(file_content["data"][0]["text"])
@@ -71,7 +74,7 @@ def log_chunks(client, vector_store_id):
         chunks = math.ceil(file_size_tokens / chunk_size_tokens)
         total_chunks += chunks
         print(f"File {file.id} had {file_size_tokens} tokens and was chunked into {chunks} chunks",)
-    print(f"Total number of files embedded: ", len(vector_store_files.data))
+    print(f"Total number of files embedded: ", {total_files})
     print(f"Total number of chunks embedded: {total_chunks}")
 
 def retrieve_vectorstore_file_content(vector_store_id, file_id):
@@ -88,3 +91,11 @@ def retrieve_vectorstore_file_content(vector_store_id, file_id):
         print(f"Error {response.status_code}: {response.text}")
         return None
     
+
+def delete_vectorstore_file(client, vector_store_id, file_id):
+    vector_store_file = client.vector_stores.files.delete(
+    vector_store_id=vector_store_id, 
+    file_id= file_id,
+    )
+    print("DELETE_VECTORSTORE_FILE: ", vector_store_file)
+    return vector_store_file
