@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-from .upload import list_files, upload_list_files
+from .openai_uploader import list_files, upload_list_files
 import requests
 import tiktoken
 import math
@@ -41,7 +41,6 @@ def create_vectorstore_file(client, vector_store_id, file_id):
         "type": "auto",
     }
     )
-    # print("CREATE_VECTORSTORE_FILE: ", vector_store_file)
     return vector_store_file
 
 def create_list_of_vectorstore_files(client, vectorstore_id):
@@ -74,8 +73,10 @@ def log_chunks(client, vector_store_id):
         chunks = math.ceil(file_size_tokens / chunk_size_tokens)
         total_chunks += chunks
         print(f"File with id: {file.id} had {file_size_tokens} tokens and was chunked into {chunks} chunks",)
-    print(f"Total number of files embedded: ", {total_files})
+    print("-----------------------------------------")
+    print(f"Total number of files embedded:  {total_files}")
     print(f"Total number of chunks embedded: {total_chunks}")
+    print("-----------------------------------------")
 
 def retrieve_vectorstore_file_content(vector_store_id, file_id):
     url = f"https://api.openai.com/v1/vector_stores/{vector_store_id}/files/{file_id}/content"
@@ -97,7 +98,6 @@ def delete_vectorstore_file(client, vector_store_id, file_id):
     vector_store_id=vector_store_id, 
     file_id= file_id,
     )
-    # print("DELETE_VECTORSTORE_FILE: ", vector_store_file)
     return vector_store_file
 
 def delete_old_vectorstore_files(slugify, files, newest_articles, client, vector_store_id):
