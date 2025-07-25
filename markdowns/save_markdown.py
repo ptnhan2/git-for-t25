@@ -10,8 +10,10 @@ def write_articles_to_markdown(articles):
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
         print(f"Created directory: {OUTPUT_DIR}")
+        print("-----------------------------------------")
     else: 
         print(f"Directory already exists: {OUTPUT_DIR}")
+        print("-----------------------------------------")
     for i, article in enumerate(articles):
         article_id = article["id"]
         title = article["title"] 
@@ -24,10 +26,8 @@ def write_articles_to_markdown(articles):
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(f"# {title}\n\n")
             f.write(markdown)
-
         print(f"[{i+1}] Saved: {file_path}")
-
-
+        
 def delete_markdowns_directory():
 	if os.path.exists(OUTPUT_DIR):
 		shutil.rmtree(OUTPUT_DIR)
