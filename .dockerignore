@@ -1,8 +1,0 @@
-__pycache__/
-*.pyc
-*.log
-.env
-hash_articles.json
-job.log
-markdowns/md_output/
-venv/
