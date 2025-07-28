@@ -45,3 +45,7 @@ Logs available here: https://github.com/ptnhan2/git-for-t25/blob/dev/logs/job.lo
 ## Screenshot
 
 ![Playground Screenshot Image](assets/ScreenAssistants.png)
+
+## Short Project Reflection
+
+Reflection available here: https://github.com/ptnhan2/git-for-t25/blob/dev/REFLECTION.md
