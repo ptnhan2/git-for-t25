@@ -35,7 +35,7 @@ For production usage, the job can be scheduled to run once per day at 7:00 AM:
 ```
 
 Test cases:
-- **Updated 1 article** by modifying its hash => correctly detected as `Added: 0, Updated: 0, Skipped: 301`.
+- **Updated 1 article** by modifying its hash => correctly detected as `Added: 0, Updated: 1, Skipped: 29`.
 - **Added 1 new article and update 1 article** => detected as `Added: 1, Updated: 1, Skipped: 28`.
 
 Logs available here: https://github.com/ptnhan2/git-for-t25/blob/dev/logs/job.log
