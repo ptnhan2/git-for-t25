@@ -10,6 +10,8 @@ encoding = tiktoken.encoding_for_model("text-embedding-3-small")
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise ValueError("Missing OPENAI_API_KEY. Please provide it via env variable.")
 
 def create_vectorstore(NAME):
     client = OpenAI(api_key=OPENAI_API_KEY)
