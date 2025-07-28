@@ -44,4 +44,4 @@ Logs available here: https://github.com/ptnhan2/git-for-t25/blob/dev/logs/job.lo
 
 ## Screenshot
 
-![Playground Screenshot](https://drive.google.com/file/d/1VViQBQ2uSnksK7vUFaEIeZszsfW0lkE5/view?usp=sharing)
+![Playground Screenshot Image](https://drive.google.com/file/d/1VViQBQ2uSnksK7vUFaEIeZszsfW0lkE5/view?usp=sharing)
