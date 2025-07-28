@@ -5,6 +5,8 @@ from pathlib import Path
 from slugify import slugify
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise ValueError("Missing OPENAI_API_KEY. Please provide it via env variable.")
 
 
 def upload_file(file_path):

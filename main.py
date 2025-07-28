@@ -14,9 +14,11 @@ from pathlib import Path
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-MAX_ARTICLES = os.getenv("MAX_ARTICLES")
-SCRAPER_BASE_URL = os.getenv("SCRAPER_BASE_URL")
-VECTORSTORE_NAME = os.getenv("VECTORSTORE_NAME")
+if not OPENAI_API_KEY:
+    raise ValueError("Missing OPENAI_API_KEY. Please provide it via env variable.")
+MAX_ARTICLES = int(os.getenv("MAX_ARTICLES", 30))
+SCRAPER_BASE_URL = os.getenv("SCRAPER_BASE_URL", "https://support.optisigns.com/api/v2/help_center/")
+VECTORSTORE_NAME = os.getenv("VECTORSTORE_NAME", "Chatbot Vector Store")
 LOG_FILE = Path("logs/job.log")
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
