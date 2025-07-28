@@ -1,8 +1,3 @@
-markdowns/md_output/
-chunking/chunking_output
-hash_articles.json
-# job.log
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
