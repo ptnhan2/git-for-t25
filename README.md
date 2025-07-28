@@ -35,8 +35,6 @@ For production usage, the job can be scheduled to run once per day at 7:00 AM:
 ```
 
 Test cases:
-
-- **First run: Add 30 new articles** => detected as `Added: 0, Updated: 0, Skipped: 30`
 - **Updated 1 article** by modifying its hash => correctly detected as `Added: 0, Updated: 0, Skipped: 301`.
 - **Added 1 new article and update 1 article** => detected as `Added: 1, Updated: 1, Skipped: 28`.
 
